@@ -8,13 +8,16 @@ var dabCount = 46
 var j = []
 var k = 2
 
-client.on("message", msg => {
-  if (msg.content === "!dab") {
-    msg.reply("Praise the Square, You have Dabbed!")
-    msg.reply("Total Dab Count:" + i++)
-    j === i 
-  }
-})
+/* BOT COMMANDS */
+
+client.commands = new Discord.Collection();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+for (const file of commandFiles) {
+  const command = require(`./commands/${file}`);
+  client.commands.set(command.name, command);
+}
+
 
 client.on("message", msg => {
   if (msg.content === "!rip") {
